@@ -1,0 +1,42 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+const { title, description = '', image } = Astro.props;
+const siteTitle = 'VoltStream Hub';
+const pageTitle = title === siteTitle ? siteTitle : `${title} — ${siteTitle}`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={Astro.url} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  {image && <meta property="og:image" content={image} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="/styles/global.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo">{siteTitle}</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/blog">Articles</a>
+    </nav>
+  </header>
+  <main>
+    <slot />
+  </main>
+  <footer class="footer">
+    <p>&copy; {new Date().getFullYear()} {siteTitle}</p>
+  </footer>
+</body>
+</html>
